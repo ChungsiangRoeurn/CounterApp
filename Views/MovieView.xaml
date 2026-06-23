@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="CounterApp.Views.MovieView"
+             xmlns:conv="clr-namespace:CounterApp.Converters"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,11 +7,91 @@
              xmlns:local="clr-namespace:CounterApp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Movie page" 
-                   FontSize="35"
-                   FontWeight="Bold"
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"/>
-    </Grid>
+
+    <UserControl.Resources>
+        <conv:ImageConverter x:Key="ImageConverter"/>
+        <Style x:Key="MovieCard" TargetType="Border">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="220"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Margin" Value="0,0,16,16"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+
+            <!-- Header -->
+            <TextBlock Text="Exploring Movies"
+                       FontSize="25"
+                       FontWeight="SemiBold"
+                       Foreground="#333333"/>
+
+            <TextBlock Text="Search and browse the full movie list"
+                       FontSize="14"
+                       Foreground="Gray"
+                       Margin="2,2,0,20"/>
+
+            <!-- Search bar -->
+            <Border Background="#F5F5F5"
+                    CornerRadius="10"
+                    Height="40"
+                    Width="320"
+                    HorizontalAlignment="Left"
+                    Margin="0,0,0,20">
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         VerticalContentAlignment="Center"
+                         Padding="10,0,0,0"
+                         FontSize="14"/>
+            </Border>
+
+            <!-- Movie grid -->
+            <ItemsControl ItemsSource="{Binding Movies}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource MovieCard}">
+                            <StackPanel>
+
+                                <Image Height="140"
+                                       Stretch="Fill"
+                                       Source="{Binding PosterUrl, Converter={StaticResource ImageConverter}}"/>
+
+                                <StackPanel Margin="10,8,10,0">
+                                    <TextBlock Text="{Binding Title}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis"/>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                        <TextBlock Text="{Binding Year}"
+                                                   FontSize="12"
+                                                   Foreground="Gray"/>
+
+                                        <TextBlock Text=" • " FontSize="12" Foreground="Gray"/>
+
+                                        <TextBlock Text="Movie"
+                                                   FontSize="12"
+                                                   Foreground="#E07B00"
+                                                   FontWeight="Bold"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
