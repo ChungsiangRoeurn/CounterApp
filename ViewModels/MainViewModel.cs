@@ -35,7 +35,7 @@ namespace CounterApp.ViewModels
                 CurrentViewModel = new OverviewViewModel(this));
 
             MovieCommand = new RelayCommand(_ =>
-                CurrentViewModel = new MovieViewModel(this));
+                CurrentViewModel = new MovieListViewModel(this));
 
             FavoriteCommand = new RelayCommand(_ =>
                 CurrentViewModel = new FavoriteViewModel(this));

@@ -15,7 +15,7 @@
             <views:DashboardView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type vm:MovieViewModel}">
+        <DataTemplate DataType="{x:Type vm:MovieListViewModel}">
             <views:MovieView/>
         </DataTemplate>
 
